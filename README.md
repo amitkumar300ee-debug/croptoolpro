@@ -2,7 +2,7 @@
 
 **57 Free PDF & Image Tools for Android**
 
-🌐 Website: https://croptoolpro1.pages.dev  
+🌐 Website: https://croptoolpro.pages.dev  
 📱 Play Store: Coming Soon  
 📧 Contact: croptoolpro@gmail.com
 
@@ -23,7 +23,7 @@ releases/         ← Upload APK here
 Push to main branch → Auto deploys to Cloudflare Pages ✅
 
 ## Privacy Policy
-https://croptoolpro1.pages.dev/privacy
+https://croptoolpro.pages.dev/privacy
 
 ## Terms of Service
-https://croptoolpro1.pages.dev/terms
+https://croptoolpro.pages.dev/terms
