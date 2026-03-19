@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CropToolPro — 54 Free PDF & Image Tools</title>
+
+<style>
+  :root {
+    --bg: #07060F;
+    --surface: #0F0D1E;
+    --surface2: #161228;
+    --border: rgba(103,80,164,0.18);
+    --accent: #7C5CFC;
+    --accent2: #C084FC;
+    --accent3: #38BDF8;
+    --text: #F0ECF9;
+    --muted: #7A6E99;
+    --red: #FF6B6B;
+    --blue: #60A5FA;
+    --green: #34D399;
+    --orange: #FB923C;
+    --purple: #A78BFA;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 5%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(7,6,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: #6B4EE8 !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 5% 50px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Mesh gradient blobs */
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(124,92,252,0.18) 0%, transparent 70%);
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(192,132,252,0.1) 0%, transparent 70%);
+    bottom: 0; right: 10%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 760px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    background: rgba(124,92,252,0.12);
+    border: 1px solid rgba(124,92,252,0.3);
+    color: var(--accent2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-size: clamp(1.8rem, 4.5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .gradient-text {
+    background: linear-gradient(135deg, #C084FC 0%, #7C5CFC 40%, #38BDF8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--accent), #6B4EE8);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 14px 28px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(124,92,252,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,92,252,0.45); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 14px 28px;
+    border-radius: 12px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-secondary:hover { background: var(--surface); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; letter-spacing: 0.05em; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 100px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 480px;
+    font-weight: 300;
+    margin-bottom: 56px;
+  }
+
+  /* ── WHY SECTION ── */
+  #why { padding-top: 0; }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .why-card {
+    position: relative;
+    background: var(--surface);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+  .why-card:hover { background: var(--surface2); }
+
+  .why-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .why-title {
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+
+  .why-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* ── TOOLS SECTION ── */
+  .tools-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .tool-tab {
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tool-tab.active, .tool-tab:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  .tools-category { display: none; }
+  .tools-category.active { display: block; }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .tool-card:hover {
+    background: var(--surface2);
+    border-color: rgba(124,92,252,0.35);
+    transform: translateY(-2px);
+  }
+
+  .tool-emoji {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .tool-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .tool-sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .hot-badge {
+    background: var(--red);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* ── PHONE MOCKUP SECTION ── */
+  #screenshots {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 5%;
+  }
+
+  .mockup-text { flex: 1; }
+
+  .mockup-phones {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 420px;
+  }
+
+  .phone {
+    width: 200px;
+    height: 380px;
+    background: var(--surface2);
+    border-radius: 32px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+    position: absolute;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+  }
+
+  .phone-1 {
+    left: 20px; top: 20px;
+    z-index: 2;
+    transform: rotate(-4deg);
+  }
+  .phone-2 {
+    right: 20px; top: 0;
+    z-index: 3;
+    transform: rotate(3deg);
+  }
+
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #0F0D1E 0%, #1A1035 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px;
+  }
+
+  .phone-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 4px;
+    opacity: 0.3;
+  }
+  .phone-bar.active { opacity: 1; }
+  .phone-bar.sm { width: 60%; }
+
+  .phone-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .phone-tile {
+    background: rgba(124,92,252,0.12);
+    border: 1px solid rgba(124,92,252,0.2);
+    border-radius: 10px;
+    height: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    gap: 4px;
+  }
+
+  .phone-tile span {
+    font-size: 7px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ── FEATURES LIST ── */
+  .feat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 40px;
+  }
+
+  .feat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .feat-check {
+    width: 22px; height: 22px;
+    background: rgba(52,211,153,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .feat-text strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .feat-text span { color: var(--muted); font-size: 0.875rem; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    text-align: center;
+    padding: 100px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .cta-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 72px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,92,252,0.12) 0%, transparent 70%);
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-sub {
+    color: var(--muted);
+    margin-bottom: 36px;
+    font-size: 1rem;
+    position: relative;
+  }
+
+  .download-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #000;
+    border: 1px solid #333;
+    color: white;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 14px;
+    transition: transform 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .download-badge:hover { transform: translateY(-2px); border-color: #555; }
+  .download-badge-icon { font-size: 28px; }
+  .download-badge-text small { display: block; font-size: 0.7rem; color: #aaa; font-weight: 400; }
+  .download-badge-text strong { display: block; font-size: 1.1rem; font-weight: 700; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-brand {
+    font-family: 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    h1 { font-size: 1.7rem !important; }
+    .hero-sub { font-size: 0.9rem; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    #screenshots { flex-direction: column; }
+    .mockup-phones { width: 100%; }
+    .hero-stats { gap: 28px; }
+    .stat-num { font-size: 1.6rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .tools-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger children */
+  .stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay: 0s; }
+  .stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay: 0.06s; }
+  .stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay: 0.12s; }
+  .stagger.visible > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay: 0.18s; }
+  .stagger.visible > *:nth-child(5) { opacity:1; transform:translateY(0); transition-delay: 0.24s; }
+  .stagger.visible > *:nth-child(6) { opacity:1; transform:translateY(0); transition-delay: 0.30s; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">✂️</div>
+    CropToolPro
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why">Features</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#screenshots">App</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+    <li><a href="#download" class="nav-cta">Download Free</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+<div class="hero-content">
+<div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Free Forever — No Subscription
+    </div>
+
+    <h1>
+      Your PDF &amp;<br>
+      <span class="gradient-text">Image Toolkit</span>
+    </h1>
+
+    <p class="hero-sub">
+      54 powerful tools. No watermarks, no sign-up, no hidden charges — 100% free.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#download" class="btn-primary">
+        <span>📲</span> Download for Android
+      </a>
+      <a href="#tools" class="btn-secondary">
+        <span>🔍</span> Explore 54 Tools
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">54</div>
+        <div class="stat-label">Tools Included</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Free Forever</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.8★</div>
+        <div class="stat-label">User Rating</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Watermarks</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY ── -->
+<section id="why">
+  <div class="section-label">Why CropToolPro</div>
+  <div class="section-title">Everything you need,<br>nothing you don't</div>
+  <p class="section-sub">Built for students, professionals, and anyone who handles documents daily.</p>
+
+  <div class="why-grid stagger reveal">
+    <div class="why-card">
+      <div class="why-icon" style="background:rgba(124,92,252,0.12);color:#A78BFA">⚡</div>
+      <div class="why-title">Blazing Fast</div>
+      <div class="why-desc">All processing happens locally on your device. No upload delays, no server queues.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon" style="background:rgba(52,211,153,0.12);color:#34D399">🔒</div>
+      <div class="why-title">100% Private</div>
+      <div class="why-desc">Your files never leave your phone. Zero data collection, zero cloud storage.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon" style="background:rgba(56,189,248,0.12);color:#38BDF8">📶</div>
+      <div class="why-title">Works Offline</div>
+      <div class="why-desc">No internet needed once installed. Use all 54 tools anywhere, anytime.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon" style="background:rgba(251,146,60,0.12);color:#FB923C">🆓</div>
+      <div class="why-title">Actually Free</div>
+      <div class="why-desc">No premium tier, no freemium tricks. Every tool is unlocked from day one.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon" style="background:rgba(255,107,107,0.12);color:#FF6B6B">🚫</div>
+      <div class="why-title">No Watermarks</div>
+      <div class="why-desc">Professional output every time. Your documents stay clean and ready to share.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon" style="background:rgba(167,139,250,0.12);color:#C084FC">📱</div>
+      <div class="why-title">Material You</div>
+      <div class="why-desc">Beautiful dark UI with Material Design 3. Feels native, works great on all Android devices.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TOOLS ── -->
+<section id="tools" style="padding-top:0">
+  <div class="section-label">All Tools</div>
+  <div class="section-title">54 tools, 5 categories</div>
+  <p class="section-sub">From PDF compression to exam photos — we've got you covered.</p>
+
+  <div class="tools-tabs">
+    <button class="tool-tab active" onclick="showCategory('pdf',this)">📄 PDF Tools</button>
+    <button class="tool-tab" onclick="showCategory('image',this)">🖼️ Image Tools</button>
+    <button class="tool-tab" onclick="showCategory('scan',this)">📷 Scan</button>
+    <button class="tool-tab" onclick="showCategory('calc',this)">🧮 Calculators</button>
+    <button class="tool-tab" onclick="showCategory('exam',this)">🎓 Exam Tools</button>
+  </div>
+
+  <!-- PDF Tools -->
+  <div class="tools-category active" id="cat-pdf">
+    <div class="tools-grid stagger">
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">📦</div><div><div class="tool-name">PDF Compress</div><div class="tool-sub">Reduce PDF size</div></div><span class="hot-badge">HOT</span></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">🔀</div><div><div class="tool-name">PDF Merge</div><div class="tool-sub">Combine multiple PDFs</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">✂️</div><div><div class="tool-name">PDF Split</div><div class="tool-sub">Split pages</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">🔄</div><div><div class="tool-name">PDF Rotate</div><div class="tool-sub">Rotate pages</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">🖼️</div><div><div class="tool-name">PDF to Image</div><div class="tool-sub">Export as JPG/PNG</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">📷</div><div><div class="tool-name">JPG to PDF</div><div class="tool-sub">Convert images to PDF</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">✍️</div><div><div class="tool-name">PDF Sign</div><div class="tool-sub">Add signature</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">🔒</div><div><div class="tool-name">PDF Lock</div><div class="tool-sub">Password protect</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">🔓</div><div><div class="tool-name">PDF Unlock</div><div class="tool-sub">Remove password</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">💧</div><div><div class="tool-name">PDF Watermark</div><div class="tool-sub">Add text watermark</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">📝</div><div><div class="tool-name">PDF to Text</div><div class="tool-sub">Extract text (OCR)</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">📋</div><div><div class="tool-name">PDF Page Order</div><div class="tool-sub">Reorder pages</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">📄</div><div><div class="tool-name">PDF Crop</div><div class="tool-sub">4-corner crop</div></div><span class="hot-badge">NEW</span></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(255,107,107,0.12)">📑</div><div><div class="tool-name">Resume Maker</div><div class="tool-sub">Professional PDF resume</div></div></div>
+    </div>
+  </div>
+
+  <!-- Image Tools -->
+  <div class="tools-category" id="cat-image">
+    <div class="tools-grid stagger">
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">📦</div><div><div class="tool-name">Image Compress</div><div class="tool-sub">Reduce image size</div></div><span class="hot-badge">HOT</span></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">📐</div><div><div class="tool-name">Image Resize</div><div class="tool-sub">Change dimensions</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">✂️</div><div><div class="tool-name">Image Crop</div><div class="tool-sub">Crop image freely</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">🔄</div><div><div class="tool-name">Image Rotate</div><div class="tool-sub">Rotate &amp; flip</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">🔀</div><div><div class="tool-name">Image Convert</div><div class="tool-sub">JPG ↔ PNG ↔ WebP</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">💧</div><div><div class="tool-name">Image Watermark</div><div class="tool-sub">Add watermark</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">🌓</div><div><div class="tool-name">Image Filter</div><div class="tool-sub">Apply filters</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">📏</div><div><div class="tool-name">Image to PDF</div><div class="tool-sub">Images → PDF</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">🔡</div><div><div class="tool-name">Add Text to Image</div><div class="tool-sub">Text overlay</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">📸</div><div><div class="tool-name">Image Background</div><div class="tool-sub">Remove/change BG</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">📊</div><div><div class="tool-name">Image Info</div><div class="tool-sub">View EXIF metadata</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(96,165,250,0.12)">🧩</div><div><div class="tool-name">Image Collage</div><div class="tool-sub">Combine images</div></div></div>
+    </div>
+  </div>
+
+  <!-- Scan -->
+  <div class="tools-category" id="cat-scan">
+    <div class="tools-grid stagger">
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(52,211,153,0.12)">📷</div><div><div class="tool-name">Scan to PDF</div><div class="tool-sub">Camera scan with history</div></div><span class="hot-badge">HOT</span></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(52,211,153,0.12)">📝</div><div><div class="tool-name">Image to Text</div><div class="tool-sub">OCR text extraction</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(52,211,153,0.12)">📊</div><div><div class="tool-name">QR Generator</div><div class="tool-sub">Create QR codes</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(52,211,153,0.12)">🔍</div><div><div class="tool-name">QR Scanner</div><div class="tool-sub">Scan QR &amp; barcodes</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(52,211,153,0.12)">📋</div><div><div class="tool-name">Barcode Generator</div><div class="tool-sub">Create barcodes</div></div></div>
+    </div>
+  </div>
+
+  <!-- Calculators -->
+  <div class="tools-category" id="cat-calc">
+    <div class="tools-grid stagger">
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(251,146,60,0.12)">🏦</div><div><div class="tool-name">GST Calculator</div><div class="tool-sub">Tax calculations</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(251,146,60,0.12)">📈</div><div><div class="tool-name">EMI Calculator</div><div class="tool-sub">Loan EMI planner</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(251,146,60,0.12)">📊</div><div><div class="tool-name">Percentage Calc</div><div class="tool-sub">% calculations</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(251,146,60,0.12)">🔢</div><div><div class="tool-name">Scientific Calc</div><div class="tool-sub">Advanced math</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(251,146,60,0.12)">📏</div><div><div class="tool-name">Unit Converter</div><div class="tool-sub">Length, weight, temp</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(251,146,60,0.12)">💱</div><div><div class="tool-name">Currency Converter</div><div class="tool-sub">Live exchange rates</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(251,146,60,0.12)">📅</div><div><div class="tool-name">Age Calculator</div><div class="tool-sub">Calculate exact age</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(251,146,60,0.12)">🏠</div><div><div class="tool-name">Area Calculator</div><div class="tool-sub">Compute areas</div></div></div>
+    </div>
+  </div>
+
+  <!-- Exam Tools -->
+  <div class="tools-category" id="cat-exam">
+    <div class="tools-grid stagger">
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(167,139,250,0.12)">🪪</div><div><div class="tool-name">Passport Photo</div><div class="tool-sub">9 size presets</div></div><span class="hot-badge">HOT</span></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(167,139,250,0.12)">✍️</div><div><div class="tool-name">Exam Signature</div><div class="tool-sub">Crop to exact size</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(167,139,250,0.12)">📋</div><div><div class="tool-name">Application Form</div><div class="tool-sub">Fill &amp; export</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(167,139,250,0.12)">📄</div><div><div class="tool-name">Resume Maker</div><div class="tool-sub">4 templates</div></div></div>
+      <div class="tool-card"><div class="tool-emoji" style="background:rgba(167,139,250,0.12)">📊</div><div><div class="tool-name">Marks Calculator</div><div class="tool-sub">CGPA &amp; % converter</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SCREENSHOTS ── -->
+<section id="screenshots">
+  <div class="mockup-text reveal">
+    <div class="section-label">See it in action</div>
+    <div class="section-title">Designed to<br>feel effortless</div>
+    <p class="section-sub" style="margin-bottom:32px">Clean dark UI, smooth navigation, and every tool just one tap away.</p>
+
+    <div class="feat-list">
+      <div class="feat-item">
+        <div class="feat-check">✓</div>
+        <div class="feat-text"><strong>TapScanner-style Scan History</strong><span>All your scans saved, organized, and shareable</span></div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-check">✓</div>
+        <div class="feat-text"><strong>4-Corner Manual PDF Crop</strong><span>Drag each corner precisely with full-screen preview</span></div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-check">✓</div>
+        <div class="feat-text"><strong>Multi-Page Resume Builder</strong><span>4 templates, auto page overflow, photo support</span></div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-check">✓</div>
+        <div class="feat-text"><strong>9 Passport Photo Presets</strong><span>SSC, UPSC, RRB, Passport, Voter ID and more</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup-phones reveal">
+    <!-- Phone 1 — Home Screen -->
+    <div class="phone phone-1">
+      <div class="phone-screen">
+        <div style="font-size:9px;color:var(--muted);align-self:flex-start;margin-bottom:6px;font-weight:600">CropToolPro</div>
+        <div style="font-size:8px;color:var(--muted);align-self:flex-start;margin-bottom:12px">Search 54 tools...</div>
+        <div class="phone-grid">
+          <div class="phone-tile">📦<span>Compress</span></div>
+          <div class="phone-tile">📐<span>Resize</span></div>
+          <div class="phone-tile">✂️<span>Crop</span></div>
+          <div class="phone-tile">🔀<span>Merge</span></div>
+          <div class="phone-tile">📷<span>Scan</span></div>
+          <div class="phone-tile">✍️<span>Sign</span></div>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:auto;padding-top:10px;border-top:1px solid var(--border);width:100%;justify-content:space-around">
+          <div style="font-size:8px;color:var(--accent);text-align:center">🏠<br>Home</div>
+          <div style="font-size:8px;color:var(--muted);text-align:center">📄<br>PDF</div>
+          <div style="font-size:8px;color:var(--muted);text-align:center">📷<br>Scan</div>
+          <div style="font-size:8px;color:var(--muted);text-align:center">⋯<br>More</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone 2 — Scan Screen -->
+    <div class="phone phone-2">
+      <div class="phone-screen">
+        <div style="font-size:9px;color:var(--muted);align-self:flex-start;margin-bottom:8px;font-weight:600">← Scan to PDF</div>
+        <div style="background:rgba(103,80,164,0.25);border-radius:12px;padding:16px;text-align:center;width:100%;margin-bottom:12px">
+          <div style="font-size:24px">📷</div>
+          <div style="font-size:8px;color:var(--text);font-weight:600;margin-top:6px">Tap to Scan</div>
+          <div style="font-size:7px;color:var(--muted);margin-top:3px">Camera · Gallery · Files</div>
+        </div>
+        <div style="font-size:8px;color:var(--accent);font-weight:600;align-self:flex-start;margin-bottom:8px">Scanned Documents</div>
+        <div style="background:var(--surface);border-radius:8px;padding:10px;width:100%;display:flex;align-items:center;gap:8px">
+          <div style="font-size:14px">📷</div>
+          <div>
+            <div style="font-size:7px;color:var(--text);font-weight:600">Scan_15-03-2026</div>
+            <div style="font-size:6px;color:var(--muted)">1 page · 1.05 MB</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRIVACY ── -->
+<section id="privacy" style="max-width:1200px;margin:0 auto">
+  <div class="reveal" style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:60px 48px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+    <div>
+      <div class="section-label">Why CropToolPro</div>
+      <div class="section-title" style="margin-bottom:16px">Simple, Fast<br>&amp; Free</div>
+      <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;font-weight:300">
+        CropToolPro is designed to be simple, fast, and powerful. All 54 tools work instantly on your device — no internet, no account, no complications.
+      </p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:center;gap:16px;padding:18px;background:var(--surface2);border-radius:14px;border:1px solid var(--border)">
+        <div style="font-size:24px">🚫</div>
+        <div><div style="font-weight:600;font-size:0.9rem">No Account Required</div><div style="font-size:0.8rem;color:var(--muted)">Download and use instantly</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;padding:18px;background:var(--surface2);border-radius:14px;border:1px solid var(--border)">
+        <div style="font-size:24px">📵</div>
+        <div><div style="font-weight:600;font-size:0.9rem">No Account Needed</div><div style="font-size:0.8rem;color:var(--muted)">No sign-up, no login required</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;padding:18px;background:var(--surface2);border-radius:14px;border:1px solid var(--border)">
+        <div style="font-size:24px">🌐</div>
+        <div><div style="font-weight:600;font-size:0.9rem">Completely Free</div><div style="font-size:0.8rem;color:var(--muted)">No subscription, no hidden charges</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;padding:18px;background:var(--surface2);border-radius:14px;border:1px solid var(--border)">
+        <div style="font-size:24px">🗑️</div>
+        <div><div style="font-weight:600;font-size:0.9rem">No Watermark</div><div style="font-size:0.8rem;color:var(--muted)">Clean professional output every time</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<div class="cta-section" id="download">
+  <div class="cta-box reveal">
+    <div class="cta-title">Ready to get started?</div>
+    <p class="cta-sub">Free download. No sign-up. 57 tools waiting for you.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative">
+      <!-- Play Store -->
+      <a href="#" id="playstore-btn" class="download-badge" style="opacity:0.5;cursor:not-allowed" title="Coming Soon on Play Store">
+        <div class="download-badge-icon">▶</div>
+        <div class="download-badge-text">
+          <small>GET IT ON</small>
+          <strong>Google Play</strong>
+        </div>
+        <span style="position:absolute;top:-10px;right:-10px;background:#FB923C;color:white;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:0.05em">SOON</span>
+      </a>
+
+      <!-- Direct APK Download -->
+      <a href="https://github.com/amitkumar300ee-debug/croptoolpro1/releases/download/v1.0/CropToolPro.apk" id="apk-btn" class="download-badge" title="Download APK directly" download>
+        <div class="download-badge-icon">📦</div>
+        <div class="download-badge-text">
+          <small>DOWNLOAD</small>
+          <strong>Direct APK</strong>
+        </div>
+        <span style="position:absolute;top:-10px;right:-10px;background:#34D399;color:#000;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:0.05em">FREE</span>
+      </a>
+    </div>
+    <p style="margin-top:20px;font-size:0.8rem;color:var(--muted)">Android 8.0+ required · Free · No account needed</p>
+    <p style="margin-top:8px;font-size:0.75rem;color:var(--muted)">⚠️ Enable "Install from unknown sources" to install APK directly</p>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">CropToolPro</div>
+  <div class="footer-links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Use</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 CropToolPro. All rights reserved.</div>
+</footer>
+
+<!-- ── MODALS ── -->
+<div id="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9998;backdrop-filter:blur(6px)" onclick="closeModal()"></div>
+
+<div id="modal-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:#0F0D1E;border:1px solid rgba(103,80,164,0.3);border-radius:20px;padding:40px;max-width:680px;width:90%;max-height:80vh;overflow-y:auto">
+  <button onclick="closeModal()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:#aaa;font-size:22px;cursor:pointer">✕</button>
+  <div id="modal-content"></div>
+</div>
+
+<style>
+#modal-box::-webkit-scrollbar{width:4px}
+#modal-box::-webkit-scrollbar-thumb{background:#6750A4;border-radius:2px}
+.modal-h{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:8px}
+.modal-sub{color:#7C5CFC;font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:24px}
+.modal-section{margin-bottom:24px}
+.modal-section h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#D0BCFF;margin-bottom:8px}
+.modal-section p,.modal-section li{color:#9E8FBF;font-size:0.9rem;line-height:1.7;font-weight:300}
+.modal-section ul{padding-left:20px}
+.modal-section li{margin-bottom:4px}
+.modal-divider{border:none;border-top:1px solid rgba(103,80,164,0.2);margin:20px 0}
+.contact-card{background:#161228;border:1px solid rgba(103,80,164,0.2);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:flex;align-items:center;gap:16px}
+.contact-icon{font-size:24px}
+.contact-card strong{display:block;color:#fff;font-size:0.9rem}
+.contact-card span{color:#7A6E99;font-size:0.85rem}
+</style>
+
+<script>
+const modals = {
+  privacy: `
+    <div class="modal-sub">Legal Document</div>
+    <div class="modal-h">Privacy Policy</div>
+    <p style="color:#7A6E99;font-size:0.8rem;margin-bottom:24px">Effective Date: March 2026 &nbsp;|&nbsp; App: CropToolPro v2.0</p>
+
+    <div class="modal-section">
+      <h3>1. Introduction</h3>
+      <p>CropToolPro ("the App") is developed and maintained by an independent developer ("Developer"). This Privacy Policy explains what data is collected, how it is used, and your rights regarding that data. By using the App, you agree to this Privacy Policy.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>2. Data We Do NOT Collect</h3>
+      <ul>
+        <li>We do NOT collect your name, email, phone number, or any personal identity</li>
+        <li>We do NOT require account creation, login, or sign-up</li>
+        <li>We do NOT upload your PDF files, images, or documents to any server</li>
+        <li>We do NOT store any files on external servers or cloud storage</li>
+        <li>We do NOT track your location, browsing history, or app usage patterns</li>
+        <li>We do NOT sell, share, rent, or trade any user data to third parties</li>
+      </ul>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>3. Permissions Used by the App</h3>
+      <ul>
+        <li><strong style="color:#D0BCFF">📷 CAMERA</strong> — Used only for Scan to PDF. CropToolPro has its own built-in scanner (no Google UI). Camera activates only when you open scanner. Never accessed in background, never recorded.</li>
+        <li><strong style="color:#D0BCFF">🖼️ READ_MEDIA_IMAGES / READ_EXTERNAL_STORAGE</strong> — Required to let you select images and PDF files from your device storage.</li>
+        <li><strong style="color:#D0BCFF">💾 WRITE_EXTERNAL_STORAGE</strong> — Required on Android 9 and below to save processed files to your Downloads folder.</li>
+        <li><strong style="color:#D0BCFF">🔔 POST_NOTIFICATIONS</strong> — Used only to show "Download Complete" notification when a file is saved.</li>
+        <li><strong style="color:#D0BCFF">📳 VIBRATE</strong> — Used for subtle haptic feedback on button presses.</li>
+        <li><strong style="color:#D0BCFF">🌐 INTERNET</strong> — Used ONLY for: (a) Google AdMob advertisements, (b) Google ML Kit model downloads. No user files or personal data are transmitted.</li>
+      </ul>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>4. Why Internet Is Used</h3>
+      <p>The App requires internet access for two specific purposes only:</p>
+      <ul>
+        <li><strong style="color:#D0BCFF">Advertisements:</strong> Google AdMob serves banner and interstitial ads. This is how the app remains free for users.</li>
+        <li><strong style="color:#D0BCFF">ML Kit:</strong> Google's on-device OCR and document scanner may download model updates. All actual processing happens locally on your device.</li>
+      </ul>
+      <p style="margin-top:8px">Your PDF files, images, and scan history are <strong style="color:#34D399">NEVER sent over the internet</strong>.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>5. Technologies & Third-Party Services & Data Collection</h3>
+      <p style="color:#9E8FBF;font-size:0.9rem;margin-bottom:16px">Exact details of what each service collects:</p>
+      <ul>
+        <li>
+          <strong style="color:#D0BCFF">📢 Google AdMob</strong><br>
+          <span style="color:#9E8FBF;font-size:0.85rem">
+          Purpose: Show ads to keep app 100% free<br>
+          Data Collected: Advertising ID, device model, OS version, approximate location (city/country)<br>
+          Where Sent: Google servers<br>
+          Your files/docs: Never touched<br>
+          <a href="https://policies.google.com/privacy" style="color:#7C5CFC">Google Privacy Policy →</a>
+          </span>
+        </li>
+        <li style="margin-top:14px">
+          <strong style="color:#D0BCFF">🔍 Google ML Kit — OCR (Text Recognition)</strong><br>
+          <span style="color:#9E8FBF;font-size:0.85rem">
+          Purpose: Makes scanned PDFs text-searchable<br>
+          Data Collected: First time — ~5MB AI model downloaded from Google. After setup = 100% on-device processing<br>
+          Where Sent: Nothing after first download. Document text NEVER sent to any server<br>
+          Your files/docs: Processed locally only
+          </span>
+        </li>
+        <li style="margin-top:14px">
+          <strong style="color:#D0BCFF">📷 Google ML Kit — Document Scanner</strong><br>
+          <span style="color:#9E8FBF;font-size:0.85rem">
+          Purpose: Scan physical documents to PDF<br>
+          Data Collected: Nothing. Camera feed processed on-device only<br>
+          Where Sent: Nothing. Photos never uploaded anywhere<br>
+          Your files/docs: Stay on your device only
+          </span>
+        </li>
+        <li style="margin-top:14px">
+          <strong style="color:#D0BCFF">📄 PDF.js (Mozilla / Cloudflare CDN)</strong><br>
+          <span style="color:#9E8FBF;font-size:0.85rem">
+          Purpose: Open PDF files with text selection and copy<br>
+          Data Collected: First time only — your IP address is logged by Cloudflare CDN (this is standard for all websites/CDNs). After first load, library is cached in your browser<br>
+          Where Sent: Cloudflare CDN (IP address only, first time). Your PDF content is NEVER uploaded<br>
+          Your files/docs: Opened locally in WebView. Never leave your device
+          </span>
+        </li>
+        <li style="margin-top:14px">
+          <strong style="color:#D0BCFF">📸 CameraX (Google AndroidX)</strong><br>
+          <span style="color:#9E8FBF;font-size:0.85rem">
+          Purpose: Camera preview for document scanner<br>
+          Data Collected: Nothing. Camera feed stays on device<br>
+          Where Sent: Nothing
+          </span>
+        </li>
+        <li style="margin-top:14px">
+          <strong style="color:#D0BCFF">🤖 Android PdfDocument & PdfRenderer</strong><br>
+          <span style="color:#9E8FBF;font-size:0.85rem">
+          Purpose: Built-in Android APIs for PDF processing<br>
+          Data Collected: Nothing. These are offline Android system APIs<br>
+          Where Sent: Nothing
+          </span>
+        </li>
+      </ul>
+      <div style="background:rgba(103,80,164,0.1);border:1px solid rgba(103,80,164,0.3);border-radius:12px;padding:16px;margin-top:16px">
+        <p style="color:#D0BCFF;font-size:0.9rem;font-weight:600">ℹ️ Note:</p>
+        <p style="color:#9E8FBF;font-size:0.85rem;margin-top:6px">CropToolPro does not have a backend server and does not collect or store user data on its own servers. File processing is done on-device. Third-party services listed above operate under their own privacy policies.</p>
+      </div>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>6. Scan History & Local Storage</h3>
+      <p>Scanned PDFs and import records are stored in app's internal storage on your device only. This data is automatically deleted when you:</p>
+      <ul>
+        <li>Delete individual scans from the Scan tab</li>
+        <li>Tap "Clear All" in the Scan tab</li>
+        <li>Uninstall the App</li>
+        <li>Clear App Data from Android Settings</li>
+      </ul>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>7. Children's Privacy</h3>
+      <p>This App does not knowingly collect data from children under the age of 13. If you believe a child has used the App and data was collected, contact us immediately.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>8. Changes to This Policy</h3>
+      <p>This Privacy Policy may be updated periodically. Continued use of the App after changes constitutes acceptance of the updated policy.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>9. Contact</h3>
+      <p>For privacy-related questions: <strong style="color:#D0BCFF">croptoolpro@gmail.com</strong><br>Response time: 48–72 hours</p>
+    </div>
+  `,
+
+  terms: `
+    <div class="modal-sub">Legal Document</div>
+    <div class="modal-h">Terms of Service</div>
+    <p style="color:#7A6E99;font-size:0.8rem;margin-bottom:24px">Effective Date: March 2026 &nbsp;|&nbsp; App: CropToolPro v2.0</p>
+
+    <div class="modal-section">
+      <h3>1. Acceptance of Terms</h3>
+      <p>By downloading, installing, or using CropToolPro ("the App"), you agree to be fully bound by these Terms of Service. <strong style="color:#FF6B6B">IF YOU DO NOT AGREE, DO NOT DOWNLOAD OR USE THIS APP.</strong></p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>2. Free to Use</h3>
+      <p>CropToolPro is <strong style="color:#34D399">100% FREE</strong>. All 54 tools are fully unlocked with no subscription, no premium tier, and no hidden charges. The app is supported by advertisements only.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>3. No Warranty — "AS IS" Basis</h3>
+      <p>THE APP IS PROVIDED ON AN <strong style="color:#FF6B6B">"AS IS" AND "AS AVAILABLE" BASIS WITHOUT ANY WARRANTIES</strong>, express or implied, including but not limited to:</p>
+      <ul>
+        <li>No warranty that the App will be error-free or uninterrupted</li>
+        <li>No warranty that bugs or defects will be corrected</li>
+        <li>No warranty of fitness for a particular purpose</li>
+        <li>No guarantee of accuracy of OCR, conversion, or processing results</li>
+      </ul>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>4. Limitation of Liability — Developer Not Responsible</h3>
+      <p><strong style="color:#FF6B6B">THE DEVELOPER SHALL NOT BE LIABLE FOR:</strong></p>
+      <ul>
+        <li>❌ Any data loss, file corruption, or damage to your files</li>
+        <li>❌ Loss of important documents processed through the App</li>
+        <li>❌ Device damage or malfunction caused by App usage</li>
+        <li>❌ Any financial loss or business loss resulting from App use</li>
+        <li>❌ Bugs, crashes, or unexpected behavior of the App</li>
+        <li>❌ Incorrect OCR results or PDF conversion errors</li>
+        <li>❌ Incompatibility with specific device models or Android versions</li>
+        <li>❌ Any consequences of using files processed by this App</li>
+      </ul>
+      <p style="margin-top:10px;color:#FF6B6B;font-weight:500">⚠️ ALWAYS KEEP A BACKUP OF YOUR IMPORTANT FILES BEFORE PROCESSING.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>5. No Guarantee of Service Continuity</h3>
+      <ul>
+        <li>The Developer does not guarantee the App will always be available on Play Store</li>
+        <li>Features may be added, modified, or removed without prior notice</li>
+        <li>The App may stop working if Android OS updates break compatibility</li>
+        <li>Third-party services (AdMob, ML Kit) may change their behavior independently</li>
+      </ul>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>6. Advertisements</h3>
+      <p>The App displays banner and interstitial ads via Google AdMob. The Developer is NOT responsible for the content of ads displayed. Ad content is determined by Google's algorithms.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>7. Prohibited Use</h3>
+      <ul>
+        <li>Do not use the App for illegal, fraudulent, or harmful activities</li>
+        <li>Do not attempt to reverse engineer, decompile, or modify the App</li>
+        <li>Do not use the App to process confidential government or classified documents</li>
+        <li>Do not exploit bugs or vulnerabilities — report them to us instead</li>
+      </ul>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>8. Intellectual Property</h3>
+      <p>All app code, design, graphics, and content are the property of the Developer. You may not reproduce or distribute any part of the App without written permission.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>9. Governing Law</h3>
+      <p>These Terms are governed by the laws of <strong style="color:#D0BCFF">India</strong>. Any disputes shall be subject to the exclusive jurisdiction of courts in India.</p>
+    </div>
+    <hr class="modal-divider">
+
+    <div class="modal-section">
+      <h3>10. Contact</h3>
+      <p>For terms-related questions: <strong style="color:#D0BCFF">croptoolpro@gmail.com</strong></p>
+    </div>
+  `,
+
+  contact: `
+    <div class="modal-sub">Get in touch</div>
+    <div class="modal-h">Contact Us</div>
+    <p style="color:#9E8FBF;margin-bottom:28px;font-size:0.95rem">We read every message! Reach out for support, bug reports, or feature requests.</p>
+
+    <div class="contact-card">
+      <div class="contact-icon">📧</div>
+      <div>
+        <strong>Email Support</strong>
+        <span>croptoolpro@gmail.com</span>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">⏱️</div>
+      <div>
+        <strong>Response Time</strong>
+        <span>Within 48–72 hours</span>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">🐛</div>
+      <div>
+        <strong>Bug Reports</strong>
+        <span>Include: device model, Android version, and steps to reproduce</span>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">💡</div>
+      <div>
+        <strong>Feature Requests</strong>
+        <span>We love suggestions! New tools are added based on user feedback.</span>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">⭐</div>
+      <div>
+        <strong>Rate on Play Store</strong>
+        <span>Your 5-star review helps us reach more users. Thank you!</span>
+      </div>
+    </div>
+  `
+};
+
+function openModal(type) {
+  document.getElementById('modal-content').innerHTML = modals[type];
+  document.getElementById('modal-overlay').style.display = 'block';
+  document.getElementById('modal-box').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').style.display = 'none';
+  document.getElementById('modal-box').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+</script>
+
+<script>
+  // Tool category tabs
+  function showCategory(id, btn) {
+    document.querySelectorAll('.tools-category').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.tool-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById('cat-' + id).classList.add('active');
+    btn.classList.add('active');
+    // Trigger stagger on newly visible category
+    const grid = document.querySelector('#cat-' + id + ' .stagger');
+    if (grid) {
+      grid.classList.remove('visible');
+      requestAnimationFrame(() => {
+        setTimeout(() => grid.classList.add('visible'), 50);
+      });
+    }
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
+
+  // Also trigger stagger on first visible tools
+  setTimeout(() => {
+    const firstGrid = document.querySelector('#cat-pdf .stagger');
+    if (firstGrid) firstGrid.classList.add('visible');
+  }, 400);
+</script>
+
+<script>
+// Redirect hash URLs to dedicated pages
+document.addEventListener('DOMContentLoaded', function() {
+    const hash = window.location.hash;
+    if (hash === '#privacy') window.location.href = '/privacy';
+    else if (hash === '#terms') window.location.href = '/terms';
+    else if (hash === '#contact') window.location.href = '/contact';
+});
+</script>
+
+</body>
+</html>
